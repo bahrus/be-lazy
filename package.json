@@ -2,9 +2,25 @@
   "name": "be-lazy",
   "version": "0.0.0",
   "description": "",
+  "keywords": [
+    "web-components",
+    "web-component",
+    "custom-element",
+    "custom-elements"
+  ],
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "trans-render": "0.0.502",
+    "be-decorated": "0.0.87",
+    "be-hive": "0.0.34"
+  },
+  "devDependencies": {
+    "xtal-test": "0.0.55",
+    "xtal-editor": "0.0.130",
+    "@skypack/package-check": "0.2.2"
   },
   "repository": {
     "type": "git",
