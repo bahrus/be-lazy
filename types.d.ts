@@ -5,6 +5,7 @@ export interface BeLazyVirtualProps{
     isIntersecting: boolean;
     isIntersectingEcho: boolean;
     enterDelay: number;
+    exitDelay: number;
 }
 
 export interface BeLazyProps extends BeLazyVirtualProps{
