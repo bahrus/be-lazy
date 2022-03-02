@@ -28,7 +28,8 @@ export class BeLazy implements BeLazyActions{
         }, options);
         setTimeout(() => {
             observer.observe(target);
-        }, enterDelay); 
+        }, enterDelay);
+        this.#observer = observer; 
     }
 
     async onIntersecting({exitDelay}: this){
@@ -98,3 +99,4 @@ define<BeLazyProps & BeDecoratedProps<BeLazyProps, BeLazyActions>, BeLazyActions
         controller: BeLazy,
     }
 });
+register(ifWantsToBe, upgrade, tagName);

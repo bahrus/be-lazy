@@ -1,4 +1,5 @@
 import { define } from 'be-decorated/be-decorated.js';
+import { register } from 'be-hive/register.js';
 export class BeLazy {
     #target;
     #observer;
@@ -24,6 +25,7 @@ export class BeLazy {
         setTimeout(() => {
             observer.observe(target);
         }, enterDelay);
+        this.#observer = observer;
     }
     async onIntersecting({ exitDelay }) {
         const target = this.#target;
@@ -85,3 +87,4 @@ define({
         controller: BeLazy,
     }
 });
+register(ifWantsToBe, upgrade, tagName);
