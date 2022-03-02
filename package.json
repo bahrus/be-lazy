@@ -1,6 +1,6 @@
 {
   "name": "be-lazy",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Instantiate template when viewable.",
   "keywords": [
     "web-components",
@@ -18,7 +18,7 @@
   "files": [
     "*.*"
   ],
-  "exports":{
+  "exports": {
     ".": "./be-lazy.js",
     "./be-lazy.js": "./be-lazy.js"
   },
