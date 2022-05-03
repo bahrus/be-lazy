@@ -1,5 +1,5 @@
 # be-lazy
 
-[![Actions Status](https://github.com/bahrus/be-lazy/workflows/CI/badge.svg)](https://github.com/bahrus/be-lazy/actions?query=workflow%3ACI)
+[![CI](https://github.com/bahrus/be-lazy/actions/workflows/CI.yml/badge.svg)](https://github.com/bahrus/be-lazy/actions/workflows/CI.yml)
 
 Instantiate template when viewable.
