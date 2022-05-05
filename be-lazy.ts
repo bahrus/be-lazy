@@ -1,6 +1,7 @@
 import {define, BeDecoratedProps} from 'be-decorated/be-decorated.js';
 import {BeLazyVirtualProps, BeLazyActions, BeLazyProps} from './types.js';
 import {register} from 'be-hive/register.js';
+import {RenderContext} from 'trans-render/lib/types';
 
 export class BeLazy implements BeLazyActions{
     #target: HTMLTemplateElement | undefined;
@@ -39,10 +40,19 @@ export class BeLazy implements BeLazyActions{
         this.#observer = observer; 
     }
 
-    async onIntersecting({exitDelay}: this){
+    async onIntersecting({exitDelay, transform, host}: this){
         const target = this.#target!;
         if(target.nextElementSibling === null){
             const clone = target.content.cloneNode(true);
+            if(transform !== undefined){
+                const {DTR} = await import('trans-render/lib/DTR.js');
+                const ctx: RenderContext = {
+                    host,
+                    match: transform
+                };
+                const dtr = new DTR(ctx);
+                await dtr.transform(clone as DocumentFragment);
+            }
             target.parentElement!.appendChild(clone);
         }else{
             const {insertAdjacentTemplate} = await import('trans-render/lib/insertAdjacentTemplate.js');
@@ -82,7 +92,8 @@ define<BeLazyProps & BeDecoratedProps<BeLazyProps, BeLazyActions>, BeLazyActions
             ifWantsToBe,
             forceVisible: [upgrade],
             virtualProps: [
-                'options', 'isIntersecting', 'isIntersectingEcho', 'enterDelay', 'rootClosest'
+                'options', 'isIntersecting', 'isIntersectingEcho', 
+                'enterDelay', 'rootClosest', 'transform', 'host'
             ],
             intro: 'intro',
             finale: 'finale',

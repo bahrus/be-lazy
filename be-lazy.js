@@ -34,10 +34,19 @@ export class BeLazy {
         }, enterDelay);
         this.#observer = observer;
     }
-    async onIntersecting({ exitDelay }) {
+    async onIntersecting({ exitDelay, transform, host }) {
         const target = this.#target;
         if (target.nextElementSibling === null) {
             const clone = target.content.cloneNode(true);
+            if (transform !== undefined) {
+                const { DTR } = await import('trans-render/lib/DTR.js');
+                const ctx = {
+                    host,
+                    match: transform
+                };
+                const dtr = new DTR(ctx);
+                await dtr.transform(clone);
+            }
             target.parentElement.appendChild(clone);
         }
         else {
@@ -70,7 +79,8 @@ define({
             ifWantsToBe,
             forceVisible: [upgrade],
             virtualProps: [
-                'options', 'isIntersecting', 'isIntersectingEcho', 'enterDelay', 'rootClosest'
+                'options', 'isIntersecting', 'isIntersectingEcho',
+                'enterDelay', 'rootClosest', 'transform', 'host'
             ],
             intro: 'intro',
             finale: 'finale',

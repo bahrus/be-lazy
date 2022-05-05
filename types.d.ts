@@ -6,6 +6,8 @@ export interface BeLazyEndUserProps{
     enterDelay: number;
     exitDelay: number;
     rootClosest: string;
+    transform: any | any[];
+    host: any;
 }
 
 export interface BeLazyVirtualProps extends BeLazyEndUserProps{
