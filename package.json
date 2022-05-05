@@ -31,7 +31,7 @@
   "devDependencies": {
     "@playwright/test": "1.21.1",
     "may-it-serve": "0.0.0",
-    "xtal-editor": "0.0.169",
+    "xtal-editor": "0.0.170",
     "@skypack/package-check": "0.2.2",
     "xtal-shell": "0.0.27"
   },
