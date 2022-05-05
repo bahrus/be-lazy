@@ -1,11 +1,16 @@
 import {BeDecoratedProps} from 'be-decorated/types';
 
-export interface BeLazyVirtualProps{
+
+export interface BeLazyEndUserProps{
     options: IntersectionObserverInit;
-    isIntersecting: boolean;
-    isIntersectingEcho: boolean;
     enterDelay: number;
     exitDelay: number;
+}
+
+export interface BeLazyVirtualProps extends BeLazyEndUserProps{
+    isIntersecting: boolean;
+    isIntersectingEcho: boolean;
+
 }
 
 export interface BeLazyProps extends BeLazyVirtualProps{
