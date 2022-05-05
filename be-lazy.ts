@@ -10,9 +10,16 @@ export class BeLazy implements BeLazyActions{
         this.#target = target;
     }
 
-    onOptions({options, proxy, enterDelay}: this): void {
+    onOptions({options, proxy, enterDelay, rootClosest}: this): void {
         this.disconnect(this);
         const target = this.#target!;
+        if(rootClosest !== undefined){
+            const root = target.closest(rootClosest);
+            if(root === null){
+                throw '404';
+            }
+            options.root = root;
+        }
         const observer = new IntersectionObserver((entries: IntersectionObserverEntry[], observer: IntersectionObserver) => {
             //if(this.#removed) return;
             for(const entry of entries){
@@ -75,7 +82,7 @@ define<BeLazyProps & BeDecoratedProps<BeLazyProps, BeLazyActions>, BeLazyActions
             ifWantsToBe,
             forceVisible: [upgrade],
             virtualProps: [
-                'options', 'isIntersecting', 'isIntersectingEcho', 'enterDelay'
+                'options', 'isIntersecting', 'isIntersectingEcho', 'enterDelay', 'rootClosest'
             ],
             intro: 'intro',
             finale: 'finale',

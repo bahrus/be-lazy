@@ -5,6 +5,7 @@ export interface BeLazyEndUserProps{
     options: IntersectionObserverInit;
     enterDelay: number;
     exitDelay: number;
+    rootClosest: string;
 }
 
 export interface BeLazyVirtualProps extends BeLazyEndUserProps{

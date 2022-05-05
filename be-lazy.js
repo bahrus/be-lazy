@@ -6,9 +6,16 @@ export class BeLazy {
     intro(proxy, target, beDecorProps) {
         this.#target = target;
     }
-    onOptions({ options, proxy, enterDelay }) {
+    onOptions({ options, proxy, enterDelay, rootClosest }) {
         this.disconnect(this);
         const target = this.#target;
+        if (rootClosest !== undefined) {
+            const root = target.closest(rootClosest);
+            if (root === null) {
+                throw '404';
+            }
+            options.root = root;
+        }
         const observer = new IntersectionObserver((entries, observer) => {
             //if(this.#removed) return;
             for (const entry of entries) {
@@ -63,7 +70,7 @@ define({
             ifWantsToBe,
             forceVisible: [upgrade],
             virtualProps: [
-                'options', 'isIntersecting', 'isIntersectingEcho', 'enterDelay'
+                'options', 'isIntersecting', 'isIntersectingEcho', 'enterDelay', 'rootClosest'
             ],
             intro: 'intro',
             finale: 'finale',
