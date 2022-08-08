@@ -8,6 +8,7 @@ export interface BeLazyEndUserProps{
     rootClosest: string;
     transform: any | any[];
     host: any;
+    //shadowRootMode?: ShadowRootMode;
 }
 
 export interface BeLazyVirtualProps extends BeLazyEndUserProps{
