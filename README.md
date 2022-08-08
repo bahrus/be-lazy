@@ -4,6 +4,8 @@
 
 be-lazy loads a template into the live DOM tree only when it becomes visible (or is about to be visible based on threshold settings.)
 
+<a href="https://nodei.co/npm/be-lazy/"><img src="https://nodei.co/npm/be-lazy.png"></a>
+
 The consumer of be-lazy needs to use css to set the size to something approximating what it will be when instantiated:
 
 ```html
