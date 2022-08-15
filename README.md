@@ -6,6 +6,10 @@ be-lazy loads a template into the live DOM tree only when it becomes visible (or
 
 <a href="https://nodei.co/npm/be-lazy/"><img src="https://nodei.co/npm/be-lazy.png"></a>
 
+[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/be-lazy?style=for-the-badge)](https://bundlephobia.com/result?p=be-lazy)
+
+<img src="http://img.badgesize.io/https://cdn.jsdelivr.net/npm/be-lazy?compression=gzip">
+
 The consumer of be-lazy needs to use css to set the size to something approximating what it will be when instantiated:
 
 ```html
@@ -20,7 +24,7 @@ The consumer of be-lazy needs to use css to set the size to something approximat
     </template>
 ```
 
-The role of be-lazy ends once it becomes viwable, and the content is instantiated.   In fact, the template is deleted at that point.
+The role of be-lazy ends once it becomes viewable, and the content is instantiated.   In fact, the template is deleted at that point.
 
 Options include setting [IntersectionObserverInit](https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API#creating_an_intersection_observer) settings:
 
@@ -37,7 +41,7 @@ Other configuration settings include "enterDelay" and "exitDelay".  The idea beh
 
 be-lazy can hold its own against [content-visibility](https://web.dev/content-visibility/) in terms of performance.
 
-It is most effective if content is "paged" -- be-lazy really shouldn't hold a single div tag as shown above, but the amount of content in should approximately fill the screen.
+It is most effective if content is "paged" -- be-lazy really shouldn't hold a single div tag as shown above, but the amount of content inside should approximately fill the screen.
 
 be-lazy is currently being used by one virtual list - [xtal-vlist](https://github.com/bahrus/xtal-vlist).   
 
