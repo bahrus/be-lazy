@@ -35,6 +35,10 @@ export class BeLazy {
         this.#observer = observer;
     }
     async onIntersecting({ exitDelay, transform, host }) {
+        if (transform !== undefined && host === undefined) {
+            //wait for host to be passed in
+            return;
+        }
         const target = this.#target;
         if (target.nextElementSibling === null) {
             const clone = target.content.cloneNode(true);
@@ -88,6 +92,7 @@ define({
                 onOptions: 'options',
                 onIntersecting: {
                     ifAllOf: ['isIntersecting', 'isIntersectingEcho'],
+                    ifKeyIn: ['host', 'transform'],
                 }
             },
             proxyPropDefaults: {
