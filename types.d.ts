@@ -1,4 +1,4 @@
-import {BeDecoratedProps} from 'be-decorated/types';
+import {BeDecoratedProps, MinimalProxy} from 'be-decorated/types';
 
 
 export interface BeLazyEndUserProps{
@@ -11,7 +11,7 @@ export interface BeLazyEndUserProps{
     //shadowRootMode?: ShadowRootMode;
 }
 
-export interface BeLazyVirtualProps extends BeLazyEndUserProps{
+export interface BeLazyVirtualProps extends BeLazyEndUserProps, MinimalProxy<HTMLTemplateElement>{
     isIntersecting: boolean;
     isIntersectingEcho: boolean;
 
@@ -22,8 +22,6 @@ export interface BeLazyProps extends BeLazyVirtualProps{
 }
 
 export interface BeLazyActions{
-
-    intro(proxy: HTMLTemplateElement & BeLazyProps, target: HTMLTemplateElement, beDecorProps: BeDecoratedProps): void;
 
     onOptions(self: this): void;
 

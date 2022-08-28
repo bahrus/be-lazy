@@ -1,16 +1,11 @@
 import { define } from 'be-decorated/be-decorated.js';
 import { register } from 'be-hive/register.js';
-export class BeLazy {
-    #target;
+export class BeLazy extends EventTarget {
     #observer;
-    intro(proxy, target, beDecorProps) {
-        this.#target = target;
-    }
-    onOptions({ options, proxy, enterDelay, rootClosest }) {
+    onOptions({ options, proxy, enterDelay, rootClosest, self }) {
         this.disconnect(this);
-        const target = this.#target;
         if (rootClosest !== undefined) {
-            const root = target.closest(rootClosest);
+            const root = self.closest(rootClosest);
             if (root === null) {
                 throw '404';
             }
@@ -30,18 +25,18 @@ export class BeLazy {
             }
         }, options);
         setTimeout(() => {
-            observer.observe(target);
+            observer.observe(self);
         }, enterDelay);
         this.#observer = observer;
+        proxy.resolved = true;
     }
-    async onIntersecting({ exitDelay, transform, host }) {
+    async onIntersecting({ exitDelay, transform, host, self, proxy }) {
         if (transform !== undefined && host === undefined) {
             //wait for host to be passed in
             return;
         }
-        const target = this.#target;
-        if (target.nextElementSibling === null) {
-            const clone = target.content.cloneNode(true);
+        if (self.nextElementSibling === null) {
+            const clone = self.content.cloneNode(true);
             if (transform !== undefined) {
                 const { DTR } = await import('trans-render/lib/DTR.js');
                 const ctx = {
@@ -51,16 +46,15 @@ export class BeLazy {
                 const dtr = new DTR(ctx);
                 await dtr.transform(clone);
             }
-            target.parentElement.appendChild(clone);
+            self.parentElement.appendChild(clone);
         }
         else {
             const { insertAdjacentTemplate } = await import('trans-render/lib/insertAdjacentTemplate.js');
-            insertAdjacentTemplate(target, target, 'afterend');
+            insertAdjacentTemplate(self, self, 'afterend');
         }
         this.#observer.disconnect();
         setTimeout(() => {
-            this.#target.remove();
-            this.#target = undefined;
+            self.remove();
         }, exitDelay);
     }
     disconnect({}) {
@@ -86,7 +80,6 @@ define({
                 'options', 'isIntersecting', 'isIntersectingEcho',
                 'enterDelay', 'rootClosest', 'transform', 'host'
             ],
-            intro: 'intro',
             finale: 'finale',
             actions: {
                 onOptions: 'options',

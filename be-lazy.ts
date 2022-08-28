@@ -3,19 +3,13 @@ import {BeLazyVirtualProps, BeLazyActions, BeLazyProps} from './types.js';
 import {register} from 'be-hive/register.js';
 import {RenderContext} from 'trans-render/lib/types';
 
-export class BeLazy implements BeLazyActions{
-    #target: HTMLTemplateElement | undefined;
+export class BeLazy extends EventTarget implements BeLazyActions{
     #observer: IntersectionObserver | undefined;
 
-    intro(proxy: HTMLTemplateElement & BeLazyProps, target: HTMLTemplateElement, beDecorProps: BeDecoratedProps): void{
-        this.#target = target;
-    }
-
-    onOptions({options, proxy, enterDelay, rootClosest}: this): void {
+    onOptions({options, proxy, enterDelay, rootClosest, self}: this): void {
         this.disconnect(this);
-        const target = this.#target!;
         if(rootClosest !== undefined){
-            const root = target.closest(rootClosest);
+            const root = self.closest(rootClosest);
             if(root === null){
                 throw '404';
             }
@@ -35,19 +29,19 @@ export class BeLazy implements BeLazyActions{
             }
         }, options);
         setTimeout(() => {
-            observer.observe(target);
+            observer.observe(self);
         }, enterDelay);
         this.#observer = observer; 
+        proxy.resolved = true;
     }
 
-    async onIntersecting({exitDelay, transform, host}: this){
+    async onIntersecting({exitDelay, transform, host, self, proxy}: this){
         if(transform !== undefined && host === undefined){
             //wait for host to be passed in
             return;
         }
-        const target = this.#target!;
-        if(target.nextElementSibling === null){
-            const clone = target.content.cloneNode(true);
+        if(self.nextElementSibling === null){
+            const clone = self.content.cloneNode(true);
             if(transform !== undefined){
                 const {DTR} = await import('trans-render/lib/DTR.js');
                 const ctx: RenderContext = {
@@ -57,15 +51,14 @@ export class BeLazy implements BeLazyActions{
                 const dtr = new DTR(ctx);
                 await dtr.transform(clone as DocumentFragment);
             }
-            target.parentElement!.appendChild(clone);
+            self.parentElement!.appendChild(clone);
         }else{
             const {insertAdjacentTemplate} = await import('trans-render/lib/insertAdjacentTemplate.js');
-            insertAdjacentTemplate(target, target, 'afterend');
+            insertAdjacentTemplate(self, self, 'afterend');
         }
         this.#observer!.disconnect();
         setTimeout(() => {
-            this.#target!.remove();
-            this.#target = undefined;
+            self!.remove();
         }, exitDelay);
     }
 
@@ -99,7 +92,6 @@ define<BeLazyProps & BeDecoratedProps<BeLazyProps, BeLazyActions>, BeLazyActions
                 'options', 'isIntersecting', 'isIntersectingEcho', 
                 'enterDelay', 'rootClosest', 'transform', 'host'
             ],
-            intro: 'intro',
             finale: 'finale',
             actions:{
                 onOptions: 'options',
