@@ -35,14 +35,20 @@ export class BeLazy extends EventTarget implements BeLazyActions{
         proxy.resolved = true;
     }
 
-    async onIntersecting({exitDelay, transform, host, self, proxy}: this){
+    async onIntersecting({exitDelay, transform, host, self, proxy, ctx}: this){
         if(transform !== undefined && host === undefined){
             //wait for host to be passed in
             return;
         }
         if(self.nextElementSibling === null){
             const clone = self.content.cloneNode(true);
-            if(transform !== undefined){
+            if(ctx !== undefined){
+                const {self} = ctx;
+                self!.flushCache();
+                self!.transform(clone as DocumentFragment);
+                self!.flushCache();
+
+            }else if(transform !== undefined){
                 const {DTR} = await import('trans-render/lib/DTR.js');
                 const ctx: RenderContext = {
                     host,
@@ -51,6 +57,7 @@ export class BeLazy extends EventTarget implements BeLazyActions{
                 const dtr = new DTR(ctx);
                 await dtr.transform(clone as DocumentFragment);
             }
+            
             self.parentElement!.appendChild(clone);
         }else{
             const {insertAdjacentTemplate} = await import('trans-render/lib/insertAdjacentTemplate.js');
@@ -90,14 +97,14 @@ define<BeLazyProps & BeDecoratedProps<BeLazyProps, BeLazyActions>, BeLazyActions
             forceVisible: [upgrade],
             virtualProps: [
                 'options', 'isIntersecting', 'isIntersectingEcho', 
-                'enterDelay', 'rootClosest', 'transform', 'host'
+                'enterDelay', 'rootClosest', 'transform', 'host', 'ctx'
             ],
             finale: 'finale',
             actions:{
                 onOptions: 'options',
                 onIntersecting: {
                     ifAllOf: ['isIntersecting', 'isIntersectingEcho'],
-                    ifKeyIn: ['host', 'transform'],
+                    ifKeyIn: ['host', 'transform', 'ctx'],
                 }
             },
             proxyPropDefaults:{

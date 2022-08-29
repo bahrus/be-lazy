@@ -1,4 +1,5 @@
 import {BeDecoratedProps, MinimalProxy} from 'be-decorated/types';
+import { RenderContext } from '../trans-render/lib/types';
 
 
 export interface BeLazyEndUserProps{
@@ -8,6 +9,7 @@ export interface BeLazyEndUserProps{
     rootClosest: string;
     transform: any | any[];
     host: any;
+    ctx: RenderContext;
     //shadowRootMode?: ShadowRootMode;
 }
 

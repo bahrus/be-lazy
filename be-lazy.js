@@ -30,14 +30,20 @@ export class BeLazy extends EventTarget {
         this.#observer = observer;
         proxy.resolved = true;
     }
-    async onIntersecting({ exitDelay, transform, host, self, proxy }) {
+    async onIntersecting({ exitDelay, transform, host, self, proxy, ctx }) {
         if (transform !== undefined && host === undefined) {
             //wait for host to be passed in
             return;
         }
         if (self.nextElementSibling === null) {
             const clone = self.content.cloneNode(true);
-            if (transform !== undefined) {
+            if (ctx !== undefined) {
+                const { self } = ctx;
+                self.flushCache();
+                self.transform(clone);
+                self.flushCache();
+            }
+            else if (transform !== undefined) {
                 const { DTR } = await import('trans-render/lib/DTR.js');
                 const ctx = {
                     host,
@@ -78,14 +84,14 @@ define({
             forceVisible: [upgrade],
             virtualProps: [
                 'options', 'isIntersecting', 'isIntersectingEcho',
-                'enterDelay', 'rootClosest', 'transform', 'host'
+                'enterDelay', 'rootClosest', 'transform', 'host', 'ctx'
             ],
             finale: 'finale',
             actions: {
                 onOptions: 'options',
                 onIntersecting: {
                     ifAllOf: ['isIntersecting', 'isIntersectingEcho'],
-                    ifKeyIn: ['host', 'transform'],
+                    ifKeyIn: ['host', 'transform', 'ctx'],
                 }
             },
             proxyPropDefaults: {
