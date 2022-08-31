@@ -45,7 +45,7 @@ export class BeLazy extends EventTarget implements BeLazyActions{
             if(ctx !== undefined){
                 const {self} = ctx;
                 self!.flushCache();
-                self!.transform(clone as DocumentFragment);
+                await self!.transform(clone as DocumentFragment);
                 self!.flushCache();
 
             }else if(transform !== undefined){

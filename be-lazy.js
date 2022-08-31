@@ -40,7 +40,7 @@ export class BeLazy extends EventTarget {
             if (ctx !== undefined) {
                 const { self } = ctx;
                 self.flushCache();
-                self.transform(clone);
+                await self.transform(clone);
                 self.flushCache();
             }
             else if (transform !== undefined) {
