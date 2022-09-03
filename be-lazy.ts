@@ -13,7 +13,7 @@ export class BeLazy extends EventTarget implements BeLazyActions{
             if(root === null){
                 throw '404';
             }
-            options.root = root;
+            options!.root = root;
         }
         const observer = new IntersectionObserver((entries: IntersectionObserverEntry[], observer: IntersectionObserver) => {
             //if(this.#removed) return;

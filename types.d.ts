@@ -1,13 +1,13 @@
 import {BeDecoratedProps, MinimalProxy} from 'be-decorated/types';
-import { RenderContext } from '../trans-render/lib/types';
+import { RenderContext, MatchRHS } from '../trans-render/lib/types';
 
 
 export interface BeLazyEndUserProps{
-    options: IntersectionObserverInit;
-    enterDelay: number;
-    exitDelay: number;
-    rootClosest: string;
-    transform: any | any[];
+    options?: IntersectionObserverInit;
+    enterDelay?: number;
+    exitDelay?: number;
+    rootClosest?: string;
+    transform?: {[key: string]: MatchRHS};
     host: any;
     ctx: RenderContext;
     //shadowRootMode?: ShadowRootMode;
