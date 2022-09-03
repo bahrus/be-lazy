@@ -1,35 +1,7 @@
 import { define } from 'be-decorated/be-decorated.js';
+import { BeIntersectional } from 'be-intersectional/be-intersectional.js';
 import { register } from 'be-hive/register.js';
-export class BeLazy extends EventTarget {
-    #observer;
-    onOptions({ options, proxy, enterDelay, rootClosest, self }) {
-        this.disconnect(this);
-        if (rootClosest !== undefined) {
-            const root = self.closest(rootClosest);
-            if (root === null) {
-                throw '404';
-            }
-            options.root = root;
-        }
-        const observer = new IntersectionObserver((entries, observer) => {
-            //if(this.#removed) return;
-            for (const entry of entries) {
-                const intersecting = entry.isIntersecting;
-                proxy.isIntersecting = intersecting;
-                setTimeout(() => {
-                    try {
-                        proxy.isIntersectingEcho = intersecting; //sometimes proxy is revoked
-                    }
-                    catch (e) { }
-                }, enterDelay);
-            }
-        }, options);
-        setTimeout(() => {
-            observer.observe(self);
-        }, enterDelay);
-        this.#observer = observer;
-        proxy.resolved = true;
-    }
+export class BeLazy extends BeIntersectional {
     async onIntersecting({ exitDelay, transform, host, self, proxy, ctx }) {
         if (transform !== undefined && host === undefined) {
             //wait for host to be passed in
@@ -58,18 +30,10 @@ export class BeLazy extends EventTarget {
             const { insertAdjacentTemplate } = await import('trans-render/lib/insertAdjacentTemplate.js');
             insertAdjacentTemplate(self, self, 'afterend');
         }
-        this.#observer.disconnect();
+        this.disconnect();
         setTimeout(() => {
             self.remove();
         }, exitDelay);
-    }
-    disconnect({}) {
-        if (this.#observer) {
-            this.#observer.disconnect();
-        }
-    }
-    finale(proxy, target, beDecorProps) {
-        this.disconnect(this);
     }
 }
 const tagName = 'be-lazy';

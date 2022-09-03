@@ -1,41 +1,13 @@
 import {define, BeDecoratedProps} from 'be-decorated/be-decorated.js';
-import {BeLazyVirtualProps, BeLazyActions, BeLazyProps} from './types.js';
+import {BeLazyVirtualProps, BeLazyActions, BLP} from './types.js';
+import {BeIntersectional} from 'be-intersectional/be-intersectional.js';
 import {register} from 'be-hive/register.js';
 import {RenderContext} from 'trans-render/lib/types';
 
-export class BeLazy extends EventTarget implements BeLazyActions{
-    #observer: IntersectionObserver | undefined;
+export class BeLazy extends BeIntersectional implements BeLazyActions{
 
-    onOptions({options, proxy, enterDelay, rootClosest, self}: this): void {
-        this.disconnect(this);
-        if(rootClosest !== undefined){
-            const root = self.closest(rootClosest);
-            if(root === null){
-                throw '404';
-            }
-            options!.root = root;
-        }
-        const observer = new IntersectionObserver((entries: IntersectionObserverEntry[], observer: IntersectionObserver) => {
-            //if(this.#removed) return;
-            for(const entry of entries){
-                const intersecting = entry.isIntersecting;
-                proxy.isIntersecting = intersecting;
-                setTimeout(() => {
-                    try{
-                        proxy.isIntersectingEcho = intersecting;//sometimes proxy is revoked
-                    }catch(e){}
-                    
-                }, enterDelay); 
-            }
-        }, options);
-        setTimeout(() => {
-            observer.observe(self);
-        }, enterDelay);
-        this.#observer = observer; 
-        proxy.resolved = true;
-    }
 
-    async onIntersecting({exitDelay, transform, host, self, proxy, ctx}: this){
+    async onIntersecting({exitDelay, transform, host, self, proxy, ctx}: BLP){
         if(transform !== undefined && host === undefined){
             //wait for host to be passed in
             return;
@@ -63,24 +35,13 @@ export class BeLazy extends EventTarget implements BeLazyActions{
             const {insertAdjacentTemplate} = await import('trans-render/lib/insertAdjacentTemplate.js');
             insertAdjacentTemplate(self, self, 'afterend');
         }
-        this.#observer!.disconnect();
+        this.disconnect();
         setTimeout(() => {
             self!.remove();
         }, exitDelay);
     }
-
-    disconnect({}: this){
-        if(this.#observer){
-            this.#observer.disconnect();
-        }
-    }
-
-    finale(proxy: Element & BeLazyProps, target: HTMLTemplateElement, beDecorProps: BeDecoratedProps){
-        this.disconnect(this);
-    }
 }
 
-export interface BeLazy extends BeLazyProps{}
 
 const tagName = 'be-lazy';
 
@@ -88,7 +49,7 @@ const ifWantsToBe = 'lazy';
 
 const upgrade = 'template';
 
-define<BeLazyProps & BeDecoratedProps<BeLazyProps, BeLazyActions>, BeLazyActions>({
+define<BeLazyVirtualProps & BeDecoratedProps<BeLazyVirtualProps, BeLazyActions>, BeLazyActions>({
     config:{
         tagName,
         propDefaults:{
