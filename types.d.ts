@@ -1,32 +1,26 @@
 import {BeDecoratedProps, MinimalProxy} from 'be-decorated/types';
 import { RenderContext, MatchRHS } from '../trans-render/lib/types';
 import { 
-    BeInterseciontalEndUserProps, 
+    BeIntersectiontalEndUserProps, 
     BeIntersectionalVirtualProps,
     BeIntersectionalActions,
 } from 'be-intersectional/types';
 
 
-export interface BeLazyEndUserProps extends BeInterseciontalEndUserProps{
+export interface BeLazyEndUserProps extends BeIntersectiontalEndUserProps{
     transform?: {[key: string]: MatchRHS};
     host: any;
     ctx: RenderContext;
 }
 
-export interface BeLazyVirtualProps extends BeLazyEndUserProps, MinimalProxy<HTMLTemplateElement>{
-    isIntersecting: boolean;
-    isIntersectingEcho: boolean;
-
-}
+export interface BeLazyVirtualProps extends BeLazyEndUserProps, BeIntersectionalVirtualProps{}
 
 export type Proxy = HTMLTemplateElement & BeLazyVirtualProps;
 
-export interface BeLazyProxy extends BeLazyActions, BeLazyVirtualProps{
+export interface ProxyProps extends BeLazyVirtualProps{
     proxy: Proxy;
 }
 
-export type BLP = BeLazyProxy;
+export type PP = ProxyProps;
 
-export interface BeLazyActions extends BeIntersectionalActions{
-
-}
+export interface BeLazyActions extends BeIntersectionalActions{}

@@ -2,6 +2,8 @@ import { define } from 'be-decorated/be-decorated.js';
 import { BeIntersectional } from 'be-intersectional/be-intersectional.js';
 import { register } from 'be-hive/register.js';
 export class BeLazy extends BeIntersectional {
+    onNotIntersecting(pp) {
+    }
     async onIntersecting({ exitDelay, transform, host, self, proxy, ctx }) {
         if (transform !== undefined && host === undefined) {
             //wait for host to be passed in

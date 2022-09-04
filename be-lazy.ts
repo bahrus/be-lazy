@@ -3,9 +3,13 @@ import {BeLazyVirtualProps, BeLazyActions, BLP} from './types.js';
 import {BeIntersectional} from 'be-intersectional/be-intersectional.js';
 import {register} from 'be-hive/register.js';
 import {RenderContext} from 'trans-render/lib/types';
+import { ProxyProps } from '../be-intersectional/types.js';
 
 export class BeLazy extends BeIntersectional implements BeLazyActions{
 
+    onNotIntersecting(pp: ProxyProps): void {
+        
+    }
 
     async onIntersecting({exitDelay, transform, host, self, proxy, ctx}: BLP){
         if(transform !== undefined && host === undefined){
