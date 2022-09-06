@@ -1,23 +1,23 @@
 import {define, BeDecoratedProps} from 'be-decorated/be-decorated.js';
-import {BeLazyVirtualProps, BeLazyActions, BLP} from './types.js';
+import {VirtualProps, Actions, PP} from './types.js';
 import {BeIntersectional} from 'be-intersectional/be-intersectional.js';
 import {register} from 'be-hive/register.js';
 import {RenderContext} from 'trans-render/lib/types';
 import { ProxyProps } from '../be-intersectional/types.js';
 
-export class BeLazy extends BeIntersectional implements BeLazyActions{
+export class BeLazy extends BeIntersectional implements Actions{
 
     onNotIntersecting(pp: ProxyProps): void {
         
     }
 
-    async onIntersecting({exitDelay, transform, host, self, proxy, ctx}: BLP){
+    async onIntersecting({exitDelay, transform, host, self, proxy, ctx}: PP){
         if(transform !== undefined && host === undefined){
             //wait for host to be passed in
             return;
         }
         if(self.nextElementSibling === null){
-            const clone = self.content.cloneNode(true);
+            const clone = (self as HTMLTemplateElement).content.cloneNode(true);
             if(ctx !== undefined){
                 const {self} = ctx;
                 self!.flushCache();
@@ -37,7 +37,7 @@ export class BeLazy extends BeIntersectional implements BeLazyActions{
             self.parentElement!.appendChild(clone);
         }else{
             const {insertAdjacentTemplate} = await import('trans-render/lib/insertAdjacentTemplate.js');
-            insertAdjacentTemplate(self, self, 'afterend');
+            insertAdjacentTemplate(self as HTMLTemplateElement, self, 'afterend');
         }
         this.disconnect();
         setTimeout(() => {
@@ -53,7 +53,7 @@ const ifWantsToBe = 'lazy';
 
 const upgrade = 'template';
 
-define<BeLazyVirtualProps & BeDecoratedProps<BeLazyVirtualProps, BeLazyActions>, BeLazyActions>({
+define<VirtualProps & BeDecoratedProps<VirtualProps, Actions>, Actions>({
     config:{
         tagName,
         propDefaults:{
