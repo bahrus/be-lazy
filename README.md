@@ -47,9 +47,11 @@ be-lazy is currently being used by one virtual list - [xtal-vlist](https://githu
 
 ## Support for doing transform during instantiation
 
-There are two additional properties that the user can specify in order to a [DTR-based](https://github.com/bahrus/trans-render) transformation when the template appears within the view pane.
+There are two additional properties that the user can specify in order to perform a [DTR-based](https://github.com/bahrus/trans-render) transformation when the template appears within the view pane.
 
-They are "transform" and "host".  The host of will need to [carefully](https://github.com/bahrus/be-decorated#approach-i--programmatically-but-carefully) pass itself to the proxy behind the decorator via oTemplate.beDecorated.lazy.host.  Both properties must be set in order for the template to be dynamically populated during instantiation.
+They are "transform" and "host".  The host provider will need to [carefully](https://github.com/bahrus/be-decorated#approach-i--programmatically-but-carefully) pass itself to the proxy behind the decorator via oTemplate.beDecorated.lazy.host.  Both properties must be set in order for the template to be dynamically populated during instantiation.
+
+Alternatively, the RenderContext can be passed via property ctx, so that the instantiated template can partake in reactive updates going forward.  
 
 
 [TODO]  Support instantiating within shadow DOM
@@ -70,4 +72,18 @@ Any web server than can serve static files will do, but...
 
 ```
 > npm run test
+```
+
+## Using from CDN:
+
+```html
+<script type=module crossorigin=anonymous>
+    import 'https://esm.run/be-promising';
+</script>
+```
+
+## Referencing via ESM Modules:
+
+```JavaScript
+import 'be-lazy/be-lazy.js';
 ```

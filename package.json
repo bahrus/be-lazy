@@ -24,15 +24,15 @@
   },
   "types": "types.d.ts",
   "dependencies": {
-    "trans-render": "0.0.585",
-    "be-decorated": "0.0.153",
-    "be-hive": "0.0.63",
-    "be-intersectional": "0.0.63"
+    "trans-render": "0.0.603",
+    "be-decorated": "0.0.157",
+    "be-hive": "0.0.65",
+    "be-intersectional": "0.0.64"
   },
   "devDependencies": {
-    "@playwright/test": "1.25.1",
+    "@playwright/test": "1.25.2",
     "may-it-serve": "0.0.2",
-    "xtal-editor": "0.0.193",
+    "xtal-editor": "0.0.196",
     "@skypack/package-check": "0.2.2",
     "xtal-shell": "0.0.27"
   },
