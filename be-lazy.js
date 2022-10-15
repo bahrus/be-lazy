@@ -1,4 +1,4 @@
-import { define } from 'be-decorated/be-decorated.js';
+import { define } from 'be-decorated/DE.js';
 import { BeIntersectional } from 'be-intersectional/be-intersectional.js';
 import { register } from 'be-hive/register.js';
 export class BeLazy extends BeIntersectional {
@@ -53,13 +53,6 @@ define({
                 'enterDelay', 'rootClosest', 'transform', 'host', 'ctx'
             ],
             finale: 'finale',
-            actions: {
-                onOptions: 'options',
-                onIntersecting: {
-                    ifAllOf: ['isIntersecting', 'isIntersectingEcho'],
-                    ifKeyIn: ['host', 'transform', 'ctx'],
-                }
-            },
             proxyPropDefaults: {
                 options: {
                     threshold: 0,
@@ -68,7 +61,14 @@ define({
                 enterDelay: 16,
                 exitDelay: 16
             }
-        }
+        },
+        actions: {
+            onOptions: 'options',
+            onIntersecting: {
+                ifAllOf: ['isIntersecting', 'isIntersectingEcho'],
+                ifKeyIn: ['host', 'transform', 'ctx'],
+            }
+        },
     },
     complexPropDefaults: {
         controller: BeLazy,

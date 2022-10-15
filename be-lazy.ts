@@ -1,4 +1,4 @@
-import {define, BeDecoratedProps} from 'be-decorated/be-decorated.js';
+import {define, BeDecoratedProps} from 'be-decorated/DE.js';
 import {VirtualProps, Actions, PP} from './types.js';
 import {BeIntersectional} from 'be-intersectional/be-intersectional.js';
 import {register} from 'be-hive/register.js';
@@ -65,13 +65,7 @@ define<VirtualProps & BeDecoratedProps<VirtualProps, Actions>, Actions>({
                 'enterDelay', 'rootClosest', 'transform', 'host', 'ctx'
             ],
             finale: 'finale',
-            actions:{
-                onOptions: 'options',
-                onIntersecting: {
-                    ifAllOf: ['isIntersecting', 'isIntersectingEcho'],
-                    ifKeyIn: ['host', 'transform', 'ctx'],
-                }
-            },
+
             proxyPropDefaults:{
                 options: {
                     threshold: 0,
@@ -80,7 +74,14 @@ define<VirtualProps & BeDecoratedProps<VirtualProps, Actions>, Actions>({
                 enterDelay: 16,
                 exitDelay: 16
             }
-        }
+        },
+        actions:{
+            onOptions: 'options',
+            onIntersecting: {
+                ifAllOf: ['isIntersecting', 'isIntersectingEcho'],
+                ifKeyIn: ['host', 'transform', 'ctx'],
+            }
+        },
     },
     complexPropDefaults:{
         controller: BeLazy,
