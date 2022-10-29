@@ -6,7 +6,11 @@ be-lazy loads a template into the live DOM tree only when it becomes visible (or
 
 <a href="https://nodei.co/npm/be-lazy/"><img src="https://nodei.co/npm/be-lazy.png"></a>
 
+Size of package, including custom element behavior framework (be-decorated):
+
 [![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/be-lazy?style=for-the-badge)](https://bundlephobia.com/result?p=be-lazy)
+
+Size of new code in this package:
 
 <img src="http://img.badgesize.io/https://cdn.jsdelivr.net/npm/be-lazy?compression=gzip">
 
