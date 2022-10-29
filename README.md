@@ -78,7 +78,7 @@ Any web server than can serve static files will do, but...
 
 ```html
 <script type=module crossorigin=anonymous>
-    import 'https://esm.run/be-promising';
+    import 'https://esm.run/be-lazy';
 </script>
 ```
 
