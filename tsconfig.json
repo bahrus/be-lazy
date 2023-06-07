@@ -9,7 +9,7 @@
 		"watch": true
 	},
 	"files": [
-		"be-lazy2.ts"
+		"be-lazy.ts"
 	],
 	"exclude":[
 		"node_modules"

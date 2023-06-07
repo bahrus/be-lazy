@@ -1,77 +1,55 @@
-import { define } from 'be-decorated/DE.js';
-import { BeIntersectional } from 'be-intersectional/be-intersectional.js';
+import { propDefaults, propInfo } from 'be-enhanced/BE.js';
+import { XE } from 'xtal-element/XE.js';
 import { register } from 'be-hive/register.js';
+import { BeIntersectional, actions, propDefaults as BeIntersectionalPropDefaults } from 'be-intersectional/be-intersectional.js';
 export class BeLazy extends BeIntersectional {
-    onNotIntersecting(pp) {
+    onNotIntersecting(self) {
     }
-    async onIntersecting({ exitDelay, transform, host, self, proxy, ctx }) {
-        if (transform !== undefined && host === undefined) {
-            //wait for host to be passed in
-            return;
-        }
-        if (self.nextElementSibling === null) {
-            const clone = self.content.cloneNode(true);
-            if (ctx !== undefined) {
-                const { self } = ctx;
-                self.flushCache();
-                await self.transform(clone);
-                self.flushCache();
-            }
-            else if (transform !== undefined) {
-                const { DTR } = await import('trans-render/lib/DTR.js');
-                const ctx = {
-                    host,
-                    match: transform
-                };
-                const dtr = new DTR(ctx);
-                await dtr.transform(clone);
-            }
-            self.parentElement.appendChild(clone);
+    async onIntersecting(self) {
+        const { enhancedElement, exitDelay } = self;
+        if (enhancedElement.nextElementSibling === null) {
+            const clone = enhancedElement.content.cloneNode(true);
+            // if(ctx !== undefined){
+            //     const {self} = ctx;
+            //     self!.flushCache();
+            //     await self!.transform(clone as DocumentFragment);
+            //     self!.flushCache();
+            // }else if(transform !== undefined){
+            //     const {DTR} = await import('trans-render/lib/DTR.js');
+            //     const ctx: RenderContext = {
+            //         host,
+            //         match: transform
+            //     };
+            //     const dtr = new DTR(ctx);
+            //     await dtr.transform(clone as DocumentFragment);
+            // }
+            enhancedElement.parentElement.appendChild(clone);
         }
         else {
             const { insertAdjacentTemplate } = await import('trans-render/lib/insertAdjacentTemplate.js');
-            insertAdjacentTemplate(self, self, 'afterend');
+            insertAdjacentTemplate(enhancedElement, enhancedElement, 'afterend');
         }
         this.disconnect();
         setTimeout(() => {
-            self.remove();
+            enhancedElement.remove();
         }, exitDelay);
     }
 }
 const tagName = 'be-lazy';
 const ifWantsToBe = 'lazy';
-const upgrade = 'template';
-define({
+const upgrade = '*';
+const xe = new XE({
     config: {
         tagName,
         propDefaults: {
-            upgrade,
-            ifWantsToBe,
-            forceVisible: [upgrade],
-            virtualProps: [
-                'options', 'isIntersecting', 'isIntersectingEcho',
-                'enterDelay', 'rootClosest', 'transform', 'host', 'ctx'
-            ],
-            finale: 'finale',
-            proxyPropDefaults: {
-                options: {
-                    threshold: 0,
-                    rootMargin: '0px',
-                },
-                enterDelay: 16,
-                exitDelay: 16
-            }
+            ...propDefaults,
+            ...BeIntersectionalPropDefaults
         },
-        actions: {
-            onOptions: 'options',
-            onIntersecting: {
-                ifAllOf: ['isIntersecting', 'isIntersectingEcho'],
-                ifKeyIn: ['host', 'transform', 'ctx'],
-            }
+        propInfo: {
+            ...propInfo
         },
+        actions
     },
-    complexPropDefaults: {
-        controller: BeLazy,
-    }
+    superclass: BeLazy
 });
 register(ifWantsToBe, upgrade, tagName);
