@@ -16,7 +16,8 @@
     "package-check": "package-check"
   },
   "files": [
-    "*.*"
+    "*.js",
+    "types.d.ts"
   ],
   "exports": {
     ".": "./be-lazy.js",
@@ -24,16 +25,15 @@
   },
   "types": "types.d.ts",
   "dependencies": {
-    "trans-render": "0.0.631",
-    "be-decorated": "0.0.190",
-    "be-hive": "0.0.77",
-    "be-intersectional": "0.0.71"
+    "be-enhanced": "0.0.27",
+    "be-hive": "0.0.102",
+    "be-intersectional": "0.0.73",
+    "trans-render": "0.0.685",
+    "xtal-element": "0.0.565"
   },
   "devDependencies": {
-    "@playwright/test": "1.27.1",
-    "may-it-serve": "0.0.3",
-    "@skypack/package-check": "0.2.2",
-    "xtal-shell": "0.0.27"
+    "@playwright/test": "1.34.3",
+    "may-it-serve": "0.0.5"
   },
   "repository": {
     "type": "git",
