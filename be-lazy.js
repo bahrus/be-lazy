@@ -1,8 +1,37 @@
-import { propDefaults, propInfo } from 'be-enhanced/BE.js';
-import { XE } from 'xtal-element/XE.js';
-import { register } from 'be-hive/register.js';
-import { BeIntersectional, actions, propDefaults as BeIntersectionalPropDefaults } from 'be-intersectional/be-intersectional.js';
-export class BeLazy extends BeIntersectional {
+import { config as beCnfg } from 'be-enhanced/config.js';
+import { BeIntersectional } from 'be-intersectional/be-intersectional.js';
+class BeLazy extends BeIntersectional {
+    static config = {
+        propDefaults: {
+            options: {
+                threshold: 0,
+                rootMargin: '0px',
+            },
+            enterDelay: 16,
+            exitDelay: 16,
+        },
+        propInfo: {
+            ...beCnfg.propInfo,
+        },
+        positractions: [...beCnfg.positractions],
+        compacts: {
+            when_options_changes_invoke_onOptions: 0,
+        },
+        actions: {
+            onIntersecting: {
+                ifEquals: ['isIntersecting', 'isIntersectingEcho'],
+            },
+            onIntersectingChange: {
+                ifKeyIn: ['isIntersecting']
+            },
+            onNotIntersecting: {
+                ifEquals: ['isNotIntersecting', 'isIntersectingEcho']
+            },
+            onNotIntersectingEcho: {
+                ifKeyIn: ['isIntersectingEcho'],
+            }
+        }
+    };
     onNotIntersecting(self) {
     }
     async onIntersecting(self) {
@@ -14,25 +43,7 @@ export class BeLazy extends BeIntersectional {
                 if (templ.content.firstChild !== null) {
                     if (nextElementSibling === null) {
                         const clone = templ.content.cloneNode(true);
-                        // if(ctx !== undefined){
-                        //     const {self} = ctx;
-                        //     self!.flushCache();
-                        //     await self!.transform(clone as DocumentFragment);
-                        //     self!.flushCache();
-                        // }else if(transform !== undefined){
-                        //     const {DTR} = await import('trans-render/lib/DTR.js');
-                        //     const ctx: RenderContext = {
-                        //         host,
-                        //         match: transform
-                        //     };
-                        //     const dtr = new DTR(ctx);
-                        //     await dtr.transform(clone as DocumentFragment);
-                        // }
-                        enhancedElement.parentElement.appendChild(clone);
-                    }
-                    else {
-                        const { insertAdjacentTemplate } = await import('trans-render/lib/insertAdjacentTemplate.js');
-                        insertAdjacentTemplate(templ, enhancedElement, 'afterend');
+                        enhancedElement.after(clone);
                     }
                 }
                 else if (nextElementSibling !== null && nextElementSibling.hasAttribute('hidden')) {
@@ -57,21 +68,5 @@ export class BeLazy extends BeIntersectional {
         }
     }
 }
-const tagName = 'be-lazy';
-const ifWantsToBe = 'lazy';
-const upgrade = 'template,meta';
-const xe = new XE({
-    config: {
-        tagName,
-        propDefaults: {
-            ...propDefaults,
-            ...BeIntersectionalPropDefaults
-        },
-        propInfo: {
-            ...propInfo
-        },
-        actions
-    },
-    superclass: BeLazy
-});
-register(ifWantsToBe, upgrade, tagName);
+await BeLazy.bootUp();
+export { BeLazy };

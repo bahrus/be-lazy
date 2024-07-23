@@ -6,10 +6,10 @@
 		"experimentalDecorators": false,
 		"newLine": "LF",
 		"strict": true,
-		"watch": true
+		"skipLibCheck": true,
 	},
 	"files": [
-		"be-lazy.ts"
+		"behivior.ts"
 	],
 	"exclude":[
 		"node_modules"

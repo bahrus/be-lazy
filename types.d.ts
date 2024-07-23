@@ -1,6 +1,6 @@
 import { 
     EndUserProps as BeIntersectiontalEndUserProps, 
-    AllProps as BeIntersectionalAllProps,
+    AP as BeIntersectionalAllProps,
     Actions as BeIntersectionalActions,
 } from 'be-intersectional/types';
 
@@ -22,4 +22,5 @@ export type ProPAP = Promise<PAP>;
 //export type POA = [PAP | undefined, ActionOnEventConfigs<PAP, Actions>];
 
 
-export interface Actions extends BeIntersectionalActions{}
+export interface Actions extends BeIntersectionalActions{
+}

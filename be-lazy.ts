@@ -1,12 +1,46 @@
-import {BE, propDefaults, propInfo} from 'be-enhanced/BE.js';
-import {BEConfig} from 'be-enhanced/types';
-import {XE} from 'xtal-element/XE.js';
-import {Actions, AllProps, AP, PAP, ProPAP} from './types';
-import {register} from 'be-hive/register.js';
+import {config as beCnfg} from 'be-enhanced/config.js';
+import {BE, BEConfig} from 'be-enhanced/BE.js';
+import {Actions, AllProps, AP, PAP} from './types';
+import { Positractions, PropInfo } from 'trans-render/froop/types';
+import {IEnhancement,  BEAllProps} from 'trans-render/be/types';
 
-import {BeIntersectional, actions, propDefaults as BeIntersectionalPropDefaults} from 'be-intersectional/be-intersectional.js';
+import {BeIntersectional} from 'be-intersectional/be-intersectional.js';
 
-export class BeLazy extends BeIntersectional{
+
+
+class BeLazy extends BeIntersectional implements Actions{
+    static override config: BEConfig<AP & BEAllProps, Actions & IEnhancement, any> ={
+        propDefaults:  {
+            options: {
+                threshold: 0,
+                rootMargin: '0px',
+            },
+            enterDelay: 16,
+            exitDelay: 16,
+        },
+        propInfo: {
+            ...beCnfg.propInfo as Partial<{[key in keyof AP]: PropInfo}>,
+        },
+        positractions: [...beCnfg.positractions as Positractions<IEnhancement>],
+        compacts: {
+            when_options_changes_invoke_onOptions: 0,
+        },
+        actions: {
+            onIntersecting: {
+                ifEquals: ['isIntersecting', 'isIntersectingEcho'],
+            },
+            onIntersectingChange: {
+                ifKeyIn:  ['isIntersecting']
+            },
+            onNotIntersecting: {
+                ifEquals: ['isNotIntersecting', 'isIntersectingEcho']
+            },
+            onNotIntersectingEcho: {
+                ifKeyIn: ['isIntersectingEcho'],
+            }
+        }
+    }
+
     onNotIntersecting(self: this): void {
         
     }
@@ -20,26 +54,7 @@ export class BeLazy extends BeIntersectional{
                 if(templ.content.firstChild !== null){
                     if(nextElementSibling === null){
                         const clone = templ.content.cloneNode(true);
-                        // if(ctx !== undefined){
-                        //     const {self} = ctx;
-                        //     self!.flushCache();
-                        //     await self!.transform(clone as DocumentFragment);
-                        //     self!.flushCache();
-            
-                        // }else if(transform !== undefined){
-                        //     const {DTR} = await import('trans-render/lib/DTR.js');
-                        //     const ctx: RenderContext = {
-                        //         host,
-                        //         match: transform
-                        //     };
-                        //     const dtr = new DTR(ctx);
-                        //     await dtr.transform(clone as DocumentFragment);
-                        // }
-                        
-                        enhancedElement.parentElement!.appendChild(clone);
-                    }else{
-                        const {insertAdjacentTemplate} = await import('trans-render/lib/insertAdjacentTemplate.js');
-                        insertAdjacentTemplate(templ, enhancedElement, 'afterend');
+                        enhancedElement.after(clone);
                     }
 
                 }else if(nextElementSibling !== null && nextElementSibling.hasAttribute('hidden')){
@@ -65,26 +80,8 @@ export class BeLazy extends BeIntersectional{
     }
 }
 
-export interface BeLazy extends AllProps{}
+interface BeLazy extends AP{}
 
-const tagName = 'be-lazy';
-const ifWantsToBe = 'lazy';
-const upgrade = 'template,meta';
+await BeLazy.bootUp();
 
-const xe = new XE<AP, Actions>({
-    config: {
-        tagName,
-        propDefaults: {
-            ...propDefaults,
-            ...BeIntersectionalPropDefaults
-        },
-        propInfo: {
-            ...propInfo
-        },
-        actions
-    },
-    superclass: BeLazy
-});
-
-register(ifWantsToBe, upgrade, tagName);
-
+export {BeLazy}
