@@ -17,9 +17,16 @@ class BeLazy extends BeIntersectional implements Actions{
             },
             enterDelay: 16,
             exitDelay: 16,
+
         },
         propInfo: {
             ...beCnfg.propInfo as Partial<{[key in keyof AP]: PropInfo}>,
+            isIntersecting:{
+                def: false,
+            },
+            isIntersectingEcho:{
+                def: false,
+            }
         },
         positractions: [...beCnfg.positractions as Positractions<IEnhancement>],
         compacts: {
@@ -27,6 +34,7 @@ class BeLazy extends BeIntersectional implements Actions{
         },
         actions: {
             onIntersecting: {
+                ifAllOf: ['isIntersecting'],
                 ifEquals: ['isIntersecting', 'isIntersectingEcho'],
             },
             onIntersectingChange: {

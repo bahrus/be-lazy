@@ -12,6 +12,12 @@ class BeLazy extends BeIntersectional {
         },
         propInfo: {
             ...beCnfg.propInfo,
+            isIntersecting: {
+                def: false,
+            },
+            isIntersectingEcho: {
+                def: false,
+            }
         },
         positractions: [...beCnfg.positractions],
         compacts: {
@@ -19,6 +25,7 @@ class BeLazy extends BeIntersectional {
         },
         actions: {
             onIntersecting: {
+                ifAllOf: ['isIntersecting'],
                 ifEquals: ['isIntersecting', 'isIntersectingEcho'],
             },
             onIntersectingChange: {

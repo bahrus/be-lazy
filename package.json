@@ -27,7 +27,7 @@
   "dependencies": {
     "be-enhanced": "0.0.114",
     "be-hive": "0.0.194",
-    "be-intersectional": "0.0.74",
+    "be-intersectional": "0.0.75",
     "trans-render": "0.0.801"
   },
   "devDependencies": {
