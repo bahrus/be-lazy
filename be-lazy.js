@@ -40,18 +40,8 @@ class BeLazy extends BeIntersectional {
         switch (localName) {
             case 'template':
                 const templ = enhancedElement;
-                if (templ.content.firstChild !== null) {
-                    if (nextElementSibling === null) {
-                        const clone = templ.content.cloneNode(true);
-                        enhancedElement.after(clone);
-                    }
-                }
-                else if (nextElementSibling !== null && nextElementSibling.hasAttribute('hidden')) {
-                    nextElementSibling.removeAttribute('hidden');
-                }
-                else {
-                    throw 'NI';
-                }
+                const clone = templ.content.cloneNode(true);
+                enhancedElement.after(clone);
                 this.disconnect();
                 if (exitDelay !== undefined && exitDelay >= 0) {
                     setTimeout(() => {

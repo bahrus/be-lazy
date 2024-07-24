@@ -1,7 +1,13 @@
-import { seed } from 'be-hive/be-hive.js';
+import { BeHive, seed, MountObserver } from 'be-hive/be-hive.js';
 export const emc = {
     base: 'be-lazy',
-    map: {},
+    map: {
+        '0.0': {
+            instanceOf: 'Object',
+            mapsTo: '.',
+            valIfFalsy: {},
+        }
+    },
     enhPropKey: 'beLazy',
     importEnh: async () => {
         const { BeLazy } = await import('./be-lazy.js');
@@ -9,3 +15,4 @@ export const emc = {
     }
 };
 const mose = seed(emc);
+MountObserver.synthesize(document, BeHive, mose);
