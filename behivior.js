@@ -1,4 +1,9 @@
+// @ts-check
 import { BeHive, seed, MountObserver } from 'be-hive/be-hive.js';
+/** @import {EMC} from './node_modules/trans-render/be/types.d.ts' */
+/**
+ * @type {EMC}
+ */
 export const emc = {
     base: 'be-lazy',
     map: {
@@ -10,7 +15,10 @@ export const emc = {
     },
     enhPropKey: 'beLazy',
     importEnh: async () => {
-        const { BeLazy } = await import('./be-lazy.js');
+        const { BeLazy } = 
+        /** @type {{new(): IEnhancement<Element>}} */ 
+        /** @type {any} */
+        (await import('./be-lazy.js'));
         return BeLazy;
     }
 };
