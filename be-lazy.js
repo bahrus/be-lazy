@@ -1,6 +1,16 @@
+// @ts-check
 import { config as beCnfg } from 'be-enhanced/config.js';
 import { BeIntersectional } from 'be-intersectional/be-intersectional.js';
+/** @import {BEConfig, IEnhancement,  BEAllProps} from './node_modules/be-enhanced/types.d.ts' */
+/** @import {Actions, PAP, AllProps, AP} from './types.d.ts' */;
+
+/**
+ * @implements {Actions}
+ */
 class BeLazy extends BeIntersectional {
+    /**
+     * @type {BEConfig<AP & BEAllProps, Actions & IEnhancement, any>}
+     */
     static config = {
         propDefaults: {
             options: {
