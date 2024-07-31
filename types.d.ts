@@ -2,7 +2,7 @@ import {
     EndUserProps as BeIntersectiontalEndUserProps, 
     AP as BeIntersectionalAllProps,
     Actions as BeIntersectionalActions,
-} from 'be-intersectional/types';
+} from './node_modules/be-intersectional/types.d.ts';
 
 
 export interface EndUserProps extends BeIntersectiontalEndUserProps{
