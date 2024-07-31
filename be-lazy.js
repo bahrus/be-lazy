@@ -1,8 +1,8 @@
 // @ts-check
 import { config as beCnfg } from 'be-enhanced/config.js';
 import { BeIntersectional } from 'be-intersectional/be-intersectional.js';
-/** @import {BEConfig} from './node_modules/be-enhanced/types.d.ts' */
-/** @import {IEnhancement, BEAllProps} from './node_modules/trans-render/be/types.d.ts' */
+/** @import {BEConfig} from './ts-refs/be-enhanced/types.d.ts' */
+/** @import {IEnhancement, BEAllProps} from './ts-refs/trans-render/be/types.d.ts' */
 /** @import {Actions, PAP, AllProps, AP} from './types.d.ts' */;
 
 /**
@@ -33,7 +33,7 @@ class BeLazy extends BeIntersectional {
         positractions: [...beCnfg.positractions],
         compacts: {
             when_options_changes_invoke_onOptions: 0,
-            
+            negate_isIntersecting_to_isNotIntersecting: 0,
         },
         actions: {
             onIntersecting: {
