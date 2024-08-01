@@ -44,15 +44,15 @@ class BeLazy extends BeIntersectional {
             //     ifKeyIn: ['isIntersecting']
             // },
             onNotIntersecting: {
-                ifEquals: ['isNotIntersecting', 'isIntersectingEcho']
+                ifEquals: ['isNotIntersecting', 'isNotIntersectingEcho']
             },
-            onNotIntersectingEcho: {
-                ifKeyIn: ['isIntersectingEcho'],
-            }
+            // onNotIntersectingEcho: {
+            //     ifKeyIn: ['isIntersectingEcho'],
+            // }
         }
     };
-    onNotIntersecting(self) {
-    }
+    // onNotIntersecting(self) {
+    // }
     async onIntersecting(self) {
         const { enhancedElement, exitDelay } = self;
         const { localName, nextElementSibling } = enhancedElement;
