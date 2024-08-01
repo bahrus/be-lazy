@@ -1,6 +1,6 @@
 {
   "name": "be-lazy",
-  "version": "0.0.31",
+  "version": "0.0.32",
   "description": "Instantiate template when viewable.",
   "keywords": [
     "web-components",
