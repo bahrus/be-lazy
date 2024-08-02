@@ -3,14 +3,14 @@ import { propInfo, rejected, resolved } from 'be-enhanced/cc.js';
 import { BeIntersectional } from 'be-intersectional/be-intersectional.js';
 /** @import {BEConfig} from './ts-refs/be-enhanced/types.d.ts' */
 /** @import {IEnhancement, BEAllProps} from './ts-refs/trans-render/be/types.d.ts' */
-/** @import {Actions, PAP, AllProps, AP} from './types.d.ts' */;
+/** @import {BeLazyActions, PAP, AllProps, AP} from './types.d.ts' */;
 
 /**
- * @implements {Actions}
+ * @implements {BeLazyActions}
  */
 class BeLazy extends BeIntersectional {
     /**
-     * @type {BEConfig<AP & BEAllProps, Actions & IEnhancement, any>}
+     * @type {BEConfig<AP & BEAllProps, BeLazyActions & IEnhancement, any>}
      */
     static config = {
         propDefaults: {
@@ -45,9 +45,9 @@ class BeLazy extends BeIntersectional {
             // onIntersectingChange: {
             //     ifKeyIn: ['isIntersecting']
             // },
-            onNotIntersecting: {
-                ifEquals: ['isNotIntersecting', 'isNotIntersectingEcho']
-            },
+            // onNotIntersecting: {
+            //     ifEquals: ['isNotIntersecting', 'isNotIntersectingEcho']
+            // },
             // onNotIntersectingEcho: {
             //     ifKeyIn: ['isIntersectingEcho'],
             // }

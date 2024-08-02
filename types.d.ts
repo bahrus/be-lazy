@@ -1,8 +1,9 @@
 import { 
     EndUserProps as BeIntersectiontalEndUserProps, 
     AP as BeIntersectionalAllProps,
-    Actions as BeIntersectionalActions,
+    BeIntersectionalActions,
 } from './node_modules/be-intersectional/types.d.ts';
+import { BEAllProps } from './ts-refs/be-enhanced/types';
 
 
 export interface EndUserProps extends BeIntersectiontalEndUserProps{
@@ -22,5 +23,7 @@ export type ProPAP = Promise<PAP>;
 //export type POA = [PAP | undefined, ActionOnEventConfigs<PAP, Actions>];
 
 
-export interface Actions extends BeIntersectionalActions{
+export interface BeLazyActions extends BeIntersectionalActions{
+    onIntersecting(self: AP & BEAllProps): void
+    onOptions(self: AP & BEAllProps): PAP;
 }
