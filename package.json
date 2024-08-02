@@ -29,7 +29,7 @@
     "be-enhanced": "0.0.128",
     "be-hive": "0.0.199",
     "be-intersectional": "0.0.77",
-    "trans-render": "0.0.817"
+    "trans-render": "0.0.818"
   },
   "devDependencies": {
     "@playwright/test": "1.45.3",
