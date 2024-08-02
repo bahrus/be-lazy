@@ -26,10 +26,10 @@
   },
   "types": "types.d.ts",
   "dependencies": {
-    "be-enhanced": "0.0.120",
+    "be-enhanced": "0.0.128",
     "be-hive": "0.0.199",
     "be-intersectional": "0.0.77",
-    "trans-render": "0.0.807"
+    "trans-render": "0.0.817"
   },
   "devDependencies": {
     "@playwright/test": "1.45.3",

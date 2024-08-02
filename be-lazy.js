@@ -1,5 +1,5 @@
 // @ts-check
-import { config as beCnfg } from 'be-enhanced/config.js';
+import { propInfo, rejected, resolved } from 'be-enhanced/cc.js';
 import { BeIntersectional } from 'be-intersectional/be-intersectional.js';
 /** @import {BEConfig} from './ts-refs/be-enhanced/types.d.ts' */
 /** @import {IEnhancement, BEAllProps} from './ts-refs/trans-render/be/types.d.ts' */
@@ -22,7 +22,7 @@ class BeLazy extends BeIntersectional {
             exitDelay: 16,
         },
         propInfo: {
-            ...beCnfg.propInfo,
+            ...propInfo,
             isIntersecting: {
                 def: false,
             },
@@ -30,7 +30,9 @@ class BeLazy extends BeIntersectional {
                 def: false,
             }
         },
-        positractions: [...beCnfg.positractions],
+        positractions: [
+            resolved, rejected
+        ],
         compacts: {
             when_options_changes_invoke_onOptions: 0,
             negate_isIntersecting_to_isNotIntersecting: 0,
