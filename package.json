@@ -11,7 +11,8 @@
   "main": "be-lazy.js",
   "module": "be-lazy.js",
   "scripts": {
-    "serve": "node node_modules/may-it-serve/serve.js",
+    "serve": "node ./node_modules/spa-ssi/serve.js",
+    "safari": "npx playwright wk http://localhost:8000",
     "test": "playwright test",
     "update": "ncu -u && npm install"
   },
@@ -22,18 +23,19 @@
   "exports": {
     ".": "./be-lazy.js",
     "./be-lazy.js": "./be-lazy.js",
+    "./emc.js": "./emc.js",
     "./🦥.js": "./🦥.js"
   },
   "types": "types.d.ts",
   "dependencies": {
-    "be-enhanced": "0.0.128",
-    "be-hive": "0.0.199",
-    "be-intersectional": "0.0.77",
-    "trans-render": "0.0.818"
+    "be-enhanced": "0.0.189",
+    "be-hive": "0.0.267",
+    "be-intersectional": "0.0.78",
+    "trans-render": "0.0.960"
   },
   "devDependencies": {
-    "@playwright/test": "1.45.3",
-    "may-it-serve": "0.0.8"
+    "@playwright/test": "1.55.1",
+    "spa-ssi": "0.0.23"
   },
   "repository": {
     "type": "git",

@@ -3,7 +3,7 @@ import { propInfo, rejected, resolved } from 'be-enhanced/cc.js';
 import { BeIntersectional } from 'be-intersectional/be-intersectional.js';
 /** @import {BEConfig} from './ts-refs/be-enhanced/types.d.ts' */
 /** @import {IEnhancement, BEAllProps} from './ts-refs/trans-render/be/types.d.ts' */
-/** @import {BeLazyActions, PAP, AllProps, AP} from './types.d.ts' */;
+/** @import {BeLazyActions, PAP, AllProps, AP, BAP} from './ts-refs/be-lazy/types' */;
 
 /**
  * @implements {BeLazyActions}
@@ -34,7 +34,7 @@ class BeLazy extends BeIntersectional {
             resolved, rejected
         ],
         compacts: {
-            when_options_changes_invoke_onOptions: 0,
+            when_options_changes_call_onOptions: 0,
             negate_isIntersecting_to_isNotIntersecting: 0,
         },
         actions: {
@@ -53,8 +53,11 @@ class BeLazy extends BeIntersectional {
             // }
         }
     };
-    // onNotIntersecting(self) {
-    // }
+
+    /**
+     * 
+     * @param {BAP} self 
+     */
     async onIntersecting(self) {
         const { enhancedElement, exitDelay } = self;
         const { localName, nextElementSibling } = enhancedElement;
