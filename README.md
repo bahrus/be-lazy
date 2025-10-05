@@ -73,9 +73,23 @@ Any web server than can serve static files will do, but...
 ## Using from CDN:
 
 ```html
-<script type=module crossorigin=anonymous>
-    import 'https://esm.run/be-lazy';
-</script>
+<body>
+    <style>
+        template[be-lazy]{
+            display:block;
+            height: 100px;
+        }
+    </style>
+    <div style="background-color:red;height:4000px"></div>
+    <template be-lazy>
+        <div id="iah" class="iah">I am here</div>
+    </template>
+    
+
+    <script type=module crossorigin=anonymous>
+        import 'https://esm.sh/be-lazy@0.0.33/emc.js';
+    </script>
+</body>
 ```
 
 ## Referencing via ESM Modules:
